@@ -148,9 +148,15 @@ public class GelfAppender extends AppenderSkeleton implements GelfMessageProvide
     protected void append(LoggingEvent event) {
         GelfMessage gelfMessage = Log4jGelfMessageFactory.makeMessage(event, this);
 
-        if(getGelfSender() == null || !getGelfSender().sendMessage(gelfMessage)) {
-            errorHandler.error("Could not send GELF message");
-        }
+		if (getGelfSender() == null) {
+			errorHandler.error("No GELF sender available!");
+		} else {
+			try {
+				getGelfSender().sendMessage(gelfMessage);
+			} catch (IOException e) {
+				errorHandler.error("Could not send GELF message", e, ErrorCode.WRITE_FAILURE);
+			}
+		}
     }
 
     public GelfSender getGelfSender() {

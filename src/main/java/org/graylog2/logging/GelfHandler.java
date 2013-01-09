@@ -164,10 +164,15 @@ public class GelfHandler
 				}
 			}
 		}
-        if ( null == gelfSender ||
-                !gelfSender.sendMessage( makeMessage( record ) ) )
+        if ( null == gelfSender )
         {
-            reportError( "Could not send GELF message", null, ErrorManager.WRITE_FAILURE );
+            reportError( "No GELF sender available", null, ErrorManager.WRITE_FAILURE );
+        } else {
+        	try {
+				gelfSender.sendMessage( makeMessage( record ) );
+			} catch (IOException e) {
+	            reportError( "Could not send GELF message", e, ErrorManager.WRITE_FAILURE );
+			}
         }
     }
 
