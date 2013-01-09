@@ -1,17 +1,18 @@
-package org.graylog2;
+package org.graylog2.log;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.MDC;
 import org.apache.log4j.spi.LocationInfo;
 import org.apache.log4j.spi.LoggingEvent;
 import org.apache.log4j.spi.ThrowableInformation;
-import org.graylog2.log.Log4jVersionChecker;
+import org.graylog2.GelfMessage;
+import org.graylog2.GelfMessageProvider;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Map;
 
-public class GelfMessageFactory {
+public class Log4jGelfMessageFactory {
     private static final int MAX_SHORT_MESSAGE_LENGTH = 250;
     private static final String ORIGIN_HOST_KEY = "originHost";
     private static final String LOGGER_NAME = "logger";

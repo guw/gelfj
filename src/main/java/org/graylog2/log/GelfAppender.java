@@ -4,7 +4,6 @@ import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.spi.ErrorCode;
 import org.apache.log4j.spi.LoggingEvent;
 import org.graylog2.GelfMessage;
-import org.graylog2.GelfMessageFactory;
 import org.graylog2.GelfMessageProvider;
 import org.graylog2.GelfSender;
 import org.json.simple.JSONValue;
@@ -147,7 +146,7 @@ public class GelfAppender extends AppenderSkeleton implements GelfMessageProvide
 
     @Override
     protected void append(LoggingEvent event) {
-        GelfMessage gelfMessage = GelfMessageFactory.makeMessage(event, this);
+        GelfMessage gelfMessage = Log4jGelfMessageFactory.makeMessage(event, this);
 
         if(getGelfSender() == null || !getGelfSender().sendMessage(gelfMessage)) {
             errorHandler.error("Could not send GELF message");
