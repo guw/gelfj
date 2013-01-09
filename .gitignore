@@ -8,4 +8,8 @@ lib/*
 build/**/*
 build/*
 *.iml
-target/**
+target/
+bin/
+.settings
+.classpath
+.project
